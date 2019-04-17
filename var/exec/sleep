@@ -1,0 +1,20 @@
+#!/bin/bash
+
+#SBATCH -J sleep
+#SBATCH -o %j.log
+
+function puts() { 
+  echo \[$(date +%Y/%m/%dT%H:%M:%S)\] "$@"
+}
+
+puts SUBMIT $SLURM_SUBMIT_HOST:$SLURM_SUBMIT_DIR $SLURM_JOB_NAME-$SLURM_JOB_ID
+puts START $(whoami)@$(hostname):$(pwd) $SLURM_CLUSTER_NAME:$SLURM_JOB_PARTITION
+
+sec=${1:-30}
+puts Sleep for $sec seconds
+sleep $sec
+
+state=$?
+puts EXIT $state 
+# Propagate last signal to the system
+exit $state

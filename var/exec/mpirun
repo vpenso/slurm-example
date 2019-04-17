@@ -1,0 +1,36 @@
+#!/bin/bash
+
+#SBATCH -J mpirun
+#SBATCH -o %x-%j.log
+
+function puts() { 
+  echo \[$(date +%Y/%m/%dT%H:%M:%S)\] "$@"
+}
+
+uid=$(id -u)
+
+puts JOB CONFIGURATION ----------------------
+scontrol show job -d -o $SLURM_JOB_ID
+puts JOB CONFIGURATION END ------------------
+puts CGROUP maxmem:$(cat /sys/fs/cgroup/memory/slurm/uid_$uid/job_$SLURM_JOB_ID/memory.limit_in_bytes) cpuid\(s\):$(cat /sys/fs/cgroup/cpuset/slurm/uid_$uid/job_$SLURM_JOB_ID/cpuset.cpus)
+puts NUMA CONFIGURATION ----------------------
+lscpu | grep -e '^Model name' -e '^NUMA node[0-9]'
+puts NUMA CONFIGURATION END ------------------
+
+command="mpirun $@"
+puts EXEC $command
+$command &
+# The process ID of the last spawned child process
+child=$!
+sleep 1 # wait for start-up
+puts PROCESSES -------------------------------
+ps -u $USER -o user,pid,cpuid,args -H
+puts PROCESSES END ---------------------------
+
+puts WAIT PID $child
+wait $child
+# Exit signal of the child process 
+state=$?
+puts EXIT $state 
+# Propagate last signal to the system
+exit $state
