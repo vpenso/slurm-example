@@ -22,19 +22,23 @@ Interconnect **bandwidth and latency** essential to enable this architecture
 ## Terminology
 
 Compute **Node**
-: Single machine used to execute user applications.
+
+> Single machine used to execute user applications.
 
 Compute **Cluster**
-: Compute nodes integrated into a single logic unit by a workload management
+
+> Compute nodes integrated into a single logic unit by a workload management
 (aka resource management) system. This system accepts work requests as "jobs"
 from users, and puts these jobs into a pending area "queue".
 
 Compute **Job** 
-: A job is an action the user wishes to be performed on the cluster resources. 
+
+> A job is an action the user wishes to be performed on the cluster resources. 
 Could be an executable file "application", a set of commands, or a script.
 
 Cluster **Queue**
-: As soon as resources become available a "matching" job from the queue is 
+
+> As soon as resources become available a "matching" job from the queue is 
 selected and send to the node(s).
 
 ## SLURM
@@ -43,20 +47,23 @@ SLURM: **S**imple **L**inux **U**tility for **R**esource **M**anagement
 
 - **Widely used**, runs on about 60% of supercomputers listed in TOP500
 - **Open Source** GPLv2, &gt;100 contributors, very active community
-- **Highly scalable**, thousands of nodes with more 3 millions of CPU cores
+- **Highly scalable**, thousands of nodes with millions of CPU cores
 
 Three key functions:
 
 - Provides a **users interface** to execute and monitor applications
 - Monitors resource state and provides **isolation and access control**
-- **Allocates resources** to jobs in the queue according to shares
+- **Allocates resources** to jobs from a queue according to shares and resource
+  availability
 
 SLURM **Cluster Controller**
-: Central entity interfacing the cluster to users and operators, runs the job 
+
+> Central entity interfacing the cluster to users and operators, runs the job 
 scheduler (workload manager) and handles all communication within the cluster.
 
 SLURM **Accounting Database**
-: Records all activity on the cluster, in particular resource consumption.
+
+> Records all activity on the cluster, in particular resource consumption.
 
 # References
 
