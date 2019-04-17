@@ -58,3 +58,10 @@ scheduler (workload manager) and handles all communication within the cluster.
 SLURM **Accounting Database**
 : Records all activity on the cluster, in particular resource consumption.
 
+# References
+
+Computer Cluster, Wikipedia  
+https://en.wikipedia.org/wiki/Computer_cluster
+
+SLURM Quick Start User Guide  
+https://slurm.schedmd.com/quickstart.html

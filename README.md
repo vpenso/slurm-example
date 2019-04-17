@@ -1,32 +1,29 @@
 # SLURM
 
-Read [docs/intro.md](docs/intro.md) for the absolute basics on cluster computing.
+Before you continue read following intrduction documents:
 
-Read [INSTALL.md](INSTALL.md) to install & configure a simple SLURM cluster.
+* [docs/intro.md](docs/intro.md) for the absolute basics on cluster computing.
+* [INSTALL.md](INSTALL.md) to install & configure a simple SLURM cluster in
+  a virtual machine,
 
-User Interface to the SLURM Cluster Controller & Accounting Database
+List of the basic SLURM commands for users:
 
 Command  | Description
 ---------|---------------------------
-sinfo    | Provides information on cluster partitions and nodes.
-squeue   | Shows an overview of jobs and their states.
-scontrol | View Slurm configuration and state, also for un-/suspending jobs.
-srun     | Run an executable as a single job (and job step). Blocks until the job is scheduled.
-salloc   | Submits an interactive job. Blocks until the job is scheduled, and the prompt appears.
-sbatch   | Submits a job script for batch scheduling. Returns immediately with job ID.
+sinfo    | Cluster, partitions, nodes, resources overview
+salloc   | Allocate resources for an interactive session
+sbatch   | Submit a job allocating resources when available
+squeue   | Overview of jobs and their states.
 scancel  | Cancels (or signals) a running or pending job.
-sacct    | Display data for all jobs and job steps in the accounting database 
 
 Documentation: 
 
 * Command options `--usage` (brief)
 * `--help` (list all options)
-* Or the command man-page 
-
-All most all commands support:
-
-* Option formats: `--partition=debug` (verbose), `-p debug` (single letter)
-* **Verbose logging** `-v`, increase verbosity `-vvvv`
+* Or the command man-page, i.e. `man sbatch`
+* All most all commands support
+  -  Option formats: `--partition=debug` (verbose), `-p debug` (single letter)
+  -  **Verbose logging** `-v`, increase verbosity `-vvvv`
 
 ## Jobs Allocation
 
@@ -40,12 +37,15 @@ Physical hardware referred as **consumable resources** allocated to a jobs.
 
 Jobs are **identified by a unique number** call `JOBID`.
 
-Following examples use the script [var/exec/sleep](var/exec/sleep) as example.
+### Interactive
+
+Following examples use the (job) script [var/exec/sleep](var/exec/sleep)
 
 `salloc` (interactive, blocking):
 
-* Waits (blocks) the shell until requested resources are allocated
-* Standard output directed to the interactive shell
+* Waits (blocks) the terminal until the requested resources are allocated
+* Once resources are available, user can interact and start an executable
+* Standard output streams directed to users terminal
 
 ```bash
 # start an interactive shell on the default resource allocation
@@ -73,14 +73,17 @@ salloc: Relinquishing job allocation 23
 salloc: Job allocation 23 has been revoked.
 ```
 
+### Batch
+
 `sbatch` (non-interactive, non-blocking), aka batch processing:
 
 * SLURM does the job management for the user.
-* User can disconnect from the terminal session used to submit the job.
+* Users can disconnect from the terminal used to submit the job.
 * A (job) **script** is copied to the compute node upon allocation and
   executes under monitoring of SLURM.
 * Standard output streams redirected to files.
-* Progress of jobs can be queried from SLURM with the `squeue` command
+* The state of a job is monitored with the `squeue` command (cf.
+  [docs/squeue.md](docs/squeue.md))
 
 ```bash
 devops@lxdev01:~$ sbatch ./sleep 10
@@ -94,6 +97,30 @@ devops@lxdev01:~$ cat 24.log
 [2019/04/17T12:00:46] Sleep for 10 seconds
 [2019/04/17T12:00:56] EXIT 0
 ```
+
+`scancel` sends signals to job, by default terminate:
+
+```bash
+# submit three jobs (sleeping for 2 minutes)
+devops@lxdev01:~$ seq 3 | xargs -Ix sbatch ./sleep 120
+Submitted batch job 28
+Submitted batch job 29
+Submitted batch job 30
+# check the state
+devops@lxdev01:~$ squeue
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+                28     debug    sleep   devops  R       0:26      1 localhost
+                29     debug    sleep   devops  R       0:26      1 localhost
+                30     debug    sleep   devops  R       0:26      1 localhost
+# kill a job
+devops@lxdev01:~$ scancel 29
+devops@lxdev01:~$ squeue
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+                28     debug    sleep   devops  R       0:48      1 localhost
+                30     debug    sleep   devops  R       0:48      1 localhost
+```
+
+
 
 
 

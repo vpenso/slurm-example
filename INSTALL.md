@@ -1,16 +1,15 @@
-This example uses virtual machines setup with vm-tools:
+## SLURM Installation
+
+This example uses a virtual machines instance setup with vm-tools:
 
 https://github.com/vpenso/vm-tools
 
 The shell script ↴ [source_me.sh][0] adds the tool-chain in this repository to 
 your shell environment.
 
-Read [docs/slurm_daemons.md][2] for an overview about operating `slurmctld`
-and `slurmd`.
+### Single Node
 
-## Single Node
-
-Install Slurm with a minimal configuration on a single node.
+Install SLURM with a minimal configuration on a single node.
 
 File                                 | Description
 -------------------------------------|----------------------------------
@@ -33,12 +32,19 @@ vm ex lxdev01 -r '
 '
 ```
 
-## Cluster Nodes
+### Multi Node Cluster
 
 Find a comprehensive example on building a SLURM cluster with OpenHPC and
-SaltStack at:
+SaltStack at with a set of virtual machine instances:
 
 https://github.com/vpenso/saltstack-slurm-example
+
+
+## References
+
+SLURM Quick Start Administrator Guide  
+https://slurm.schedmd.com/quickstart_admin.html
+
 
 [0]: source_me.sh
 [1]: etc/slurm/slurm.conf-debian_localhost
