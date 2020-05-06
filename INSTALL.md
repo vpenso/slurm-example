@@ -1,4 +1,4 @@
-# SLURM Installation
+# Installation
 
 This example uses a virtual machines instance setup with vm-tools:
 
@@ -18,18 +18,9 @@ vm s ${image:-debian10} ${node:-lxrm01}
 vm ex $node -r -- apt install -y munge slurm-wlm slurmctld slurmd
 ```
 
-**Configure** a minimal configuration for a single node:
-
-```bash
-# copy the slurm.conf
-vm sy $node -r \
-        $SLURM_EXAMPLE/etc/slurm/slurm.conf-debian_localhost \
-        :/etc/slurm-llnl/slurm.conf
-# start the daemons, and check state
-vm ex $node -r systemctl restart slurmctld slurmd
-```
-
 ## CentOS 7
+
+### Source Build
 
 Prepare a VM with all build **dependencies**:
 
@@ -95,12 +86,37 @@ vm ex $node -r -- yum -y install epel-release
 url=https://github.com/openhpc/ohpc/releases/download/v1.3.GA
 vm ex $node -r -- rpm -i $url/ohpc-release-1.3-1.el7.x86_64.rpm
 # install MUNGE, and SLURM
-vm ex $node -r -- yum install -y slurm-slurmctld-ohpc slurm-slurmd-ohpc
+vm ex $node -r -- yum install -y \
+        slurm-slurmctld-ohpc slurm-slurmd-ohpc slurm-example-configs-ohpc
 ```
 
+# Configuration
 
+## Debian
 
-## References
+**Configure** a minimal configuration for a single node:
+
+```bash
+# upload a SLURM configuration file
+conf=$SLURM_EXAMPLE/etc/slurm/slurm.conf-debian_localhost
+vm sy $node -r $conf :/etc/slurm/slurm.conf
+# start the daemons, and check state
+vm ex $node -r systemctl restart slurmctld slurmd
+```
+
+## CentOS
+
+**Configure** a minimal configuration for a single node:
+
+```bash
+# upload a SLURM configuration file
+conf=$SLURM_EXAMPLE/etc/slurm/slurm.conf-centos_localhost
+vm sy $node -r $conf :/etc/slurm/slurm.conf
+# restart the services
+vm ex $node -r systemctl restart slurmctld slurmd
+```
+
+# References
 
 [sag] SLURM Quick Start Administrator Guide  
 <https://slurm.schedmd.com/quickstart_admin.html>
