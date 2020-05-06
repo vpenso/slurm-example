@@ -7,7 +7,7 @@ https://github.com/vpenso/vm-tools
 The shell script ↴ [source_me.sh][0] adds the tool-chain in this repository to 
 your shell environment.
 
-### Single Node
+## Debian
 
 Install SLURM with a minimal configuration on a single node.
 
@@ -32,18 +32,47 @@ vm ex lxdev01 -r '
 '
 ```
 
-### Multi Node Cluster
+## CentOS 7
 
-Find a comprehensive example on building a SLURM cluster with OpenHPC and
-SaltStack at with a set of virtual machine instances:
+Prepare a VM with all build dependencies:
 
-https://github.com/vpenso/saltstack-slurm-example
+```bash
+# start a new VM instance
+node=lxdev01
+vm s centos7 $node
+# install compilers, build dependencies, etc.
+vm ex $node -r -- yum -y install epel-release # needed for dependencies
+vm ex $node -r -- yum install -y \
+        @development \
+        bzip2-devel freeipmi-devel glib2-devel gtk2-devel \
+        hdf5-devel hwloc-devel libcurl-devel libfastjson-devel \
+        libssh2-devel lua-devel lz4-devel man2html \
+        mariadb-devel munge-devel munge-libs ncurses-devel \
+        numactl-devel openmpi openssl-devel pam-devel \
+        perl-DBI perl-ExtUtils-MakeMaker perl-Switch \
+        pmix readline-devel rdma-core-devel rpm-build \
+        rrdtool-devel wget zlib-devel
+```
 
+Download, build, and install MUNGE [mas]:
+
+```bash
+url=https://github.com/dun/munge/releases/download
+version=0.5.14
+vm ex $node wget $url/munge-${version}/munge-${version}.tar.xz
+vm ex $node -- rpmbuild -tb --clean munge-${version}.tar.xz
+# install recently build Munge including the development package
+vm ex $node -- rpm -i ~/rpmbuild/RPMS/x86_64/munge*.rpm
+# ...otherwise Slurm will build without MUNGE support
+```
 
 ## References
 
-SLURM Quick Start Administrator Guide  
-https://slurm.schedmd.com/quickstart_admin.html
+[sag] SLURM Quick Start Administrator Guide  
+<https://slurm.schedmd.com/quickstart_admin.html>
+
+[mas] MUNGE authentication service for SLURM  
+<https://github.com/dun/munge>
 
 
 [0]: source_me.sh
