@@ -80,6 +80,18 @@ Copy all packages from the VM into a temporary directory on the host:
 vm sy $node ':rpmbuild/RPMS/*/{munge,slurm}*.rpm' $SLURM_EXAMPLE/var/packages/
 ```
 
+Install the packages build above in a VM instance:
+
+```bash
+vm s ${image:-centos7} ${node:-lxrm01}
+# required to install run-time dependencies
+vm ex $node -r -- yum -y install epel-release
+# upload the MUNGE, and SLURM packages
+vm sy $node $SLURM_EXAMPLE/var/packages/*.rpm :/tmp/
+# ...install
+vm ex $node -r -- yum localinstall -y '/tmp/{munge,slurm}*.rpm'
+```
+
 ## References
 
 [sag] SLURM Quick Start Administrator Guide  
