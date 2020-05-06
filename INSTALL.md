@@ -83,6 +83,23 @@ vm sy $node $SLURM_EXAMPLE/var/packages/*.rpm :/tmp/
 vm ex $node -r -- yum localinstall -y '/tmp/{munge,slurm}*.rpm'
 ```
 
+### OpenHPC
+
+**Install** MUNGE, and SLURM from the OpenHPC [opc] repository:
+
+```bash
+vm s ${image:-centos7} ${node:-lxrm01}
+# required to install run-time dependencies
+vm ex $node -r -- yum -y install epel-release
+# install the OpenHPC Yum repository configuration
+url=https://github.com/openhpc/ohpc/releases/download/v1.3.GA
+vm ex $node -r -- rpm -i $url/ohpc-release-1.3-1.el7.x86_64.rpm
+# install MUNGE, and SLURM
+vm ex $node -r -- yum install -y slurm-slurmctld-ohpc slurm-slurmd-ohpc
+```
+
+
+
 ## References
 
 [sag] SLURM Quick Start Administrator Guide  
@@ -94,6 +111,11 @@ vm ex $node -r -- yum localinstall -y '/tmp/{munge,slurm}*.rpm'
 
 [ssc] SLURM Source Code on GitHub  
 <https://www.schedmd.com/downloads.php>
+
+[opc] OpenHPC Source code on GitHub  
+<https://github.com/openhpc/ohpc/>  
+<https://github.com/openhpc/ohpc/releases>  
+<http://build.openhpc.community/dist/>
 
 [0]: source_me.sh
 [1]: etc/slurm/slurm.conf-debian_localhost
