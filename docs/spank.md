@@ -15,7 +15,8 @@ echo 'include /etc/slurm/plugstack.conf.d/*.conf' |\
         sudo tee /etc/slurm/plugstack.conf
 ```
 
-Run a [simple demo][demo] SPANK plugin to demonstrate various callback function:
+Run a [simple demo][demo] [02] SPANK plugin to demonstrate various callback
+function:
 
 [demo]: https://github.com/yqin/slurm-plugins/blob/master/spank_demo.c
 
