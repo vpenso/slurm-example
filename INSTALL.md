@@ -49,7 +49,7 @@ vm ex $node -r -- yum install -y @development \
         mariadb-devel ncurses-devel \
         numactl-devel openmpi openssl-devel pam-devel \
         perl-DBI perl-ExtUtils-MakeMaker perl-Switch \
-        pmix readline-devel rdma-core-devel rpm-build \
+        readline-devel rdma-core-devel rpm-build \
         rrdtool-devel wget zlib-devel
 ```
 
@@ -61,7 +61,7 @@ version=0.5.14
 vm ex $node wget $url/munge-${version}/munge-${version}.tar.xz
 vm ex $node -- rpmbuild -tb --without verify --clean munge-${version}.tar.xz
 # install recently build Munge including the development package
-vm ex $node -r 'rpm -ivh ~/rpmbuild/RPMS/x86_64/munge*.rpm'
+vm ex $node -s -- rpm -ivh ~/rpmbuild/RPMS/x86_64/munge\*.rpm
 # ...otherwise Slurm will build without MUNGE support
 ```
 
