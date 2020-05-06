@@ -41,13 +41,12 @@ Prepare a VM with all build dependencies:
 node=lxdev01
 vm s centos7 $node
 # install compilers, build dependencies, etc.
-vm ex $node -r -- yum -y install epel-release # needed for dependencies
-vm ex $node -r -- yum install -y \
-        @development \
+vm ex $node -r -- yum -y install epel-release
+vm ex $node -r -- yum install -y @development \
         bzip2-devel freeipmi-devel glib2-devel gtk2-devel \
         hdf5-devel hwloc-devel libcurl-devel libfastjson-devel \
         libssh2-devel lua-devel lz4-devel man2html \
-        mariadb-devel munge-devel munge-libs ncurses-devel \
+        mariadb-devel ncurses-devel \
         numactl-devel openmpi openssl-devel pam-devel \
         perl-DBI perl-ExtUtils-MakeMaker perl-Switch \
         pmix readline-devel rdma-core-devel rpm-build \
@@ -60,9 +59,9 @@ Download, build, and install MUNGE [mas]:
 url=https://github.com/dun/munge/releases/download
 version=0.5.14
 vm ex $node wget $url/munge-${version}/munge-${version}.tar.xz
-vm ex $node -- rpmbuild -tb --clean munge-${version}.tar.xz
+vm ex $node -- rpmbuild -tb --without verify --clean munge-${version}.tar.xz
 # install recently build Munge including the development package
-vm ex $node -- rpm -i ~/rpmbuild/RPMS/x86_64/munge*.rpm
+vm ex $node -r 'rpm -ivh ~/rpmbuild/RPMS/x86_64/munge*.rpm'
 # ...otherwise Slurm will build without MUNGE support
 ```
 
@@ -72,7 +71,8 @@ vm ex $node -- rpm -i ~/rpmbuild/RPMS/x86_64/munge*.rpm
 <https://slurm.schedmd.com/quickstart_admin.html>
 
 [mas] MUNGE authentication service for SLURM  
-<https://github.com/dun/munge>
+<https://github.com/dun/munge>  
+<https://github.com/dun/munge/wiki/Installation-Guide>
 
 
 [0]: source_me.sh
