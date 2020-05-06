@@ -9,32 +9,27 @@ your shell environment.
 
 ## Debian
 
-Install SLURM with a minimal configuration on a single node.
-
-File                                 | Description
--------------------------------------|----------------------------------
-[.../slurm.conf-debian_localhost][1] | Configuration for slurm{ctl}d on locahost 
+Install SLURM from the Debian package repository:
 
 ```bash
 # start a Debian VM instance
-vm s debian lxdev01
+vm s ${image:-debian10} ${node:-lxrm01}
 # install Slurm Debian packages
-vm ex lxdev01 -r 'apt install -y munge slurm-wlm slurmctld slurmd'
+vm ex $node -r -- apt install -y munge slurm-wlm slurmctld slurmd
+```
+
+Configure a minimal configuration for a single node:
+
+```bash
 # copy the slurm.conf
-vm sy lxdev01 -r \
+vm sy $node -r \
         $SLURM_EXAMPLE/etc/slurm/slurm.conf-debian_localhost \
         :/etc/slurm-llnl/slurm.conf
 # start the daemons, and check state
-vm ex lxdev01 -r '
-        systemctl restart slurmctld slurmd
-        systemctl status slurmctld slurmd
-        sinfo
-'
+vm ex $node -r systemctl restart slurmctld slurmd
 ```
 
 ## CentOS 7
-
-### Source Build
 
 Prepare a VM with all build dependencies:
 
