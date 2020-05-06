@@ -46,14 +46,14 @@ vm ex $node -r -- yum install -y @development \
         bzip2-devel freeipmi-devel glib2-devel gtk2-devel \
         hdf5-devel hwloc-devel libcurl-devel libfastjson-devel \
         libssh2-devel lua-devel lz4-devel man2html \
-        mariadb-devel ncurses-devel \
+        mariadb-devel ncurses-devel python3 \
         numactl-devel openmpi openssl-devel pam-devel \
         perl-DBI perl-ExtUtils-MakeMaker perl-Switch \
         readline-devel rdma-core-devel rpm-build \
         rrdtool-devel wget zlib-devel
 ```
 
-Download, build, and install MUNGE [mas]:
+Download, build, and install MUNGE [msc]:
 
 ```bash
 url=https://github.com/dun/munge/releases/download
@@ -65,15 +65,26 @@ vm ex $node -s -- rpm -ivh ~/rpmbuild/RPMS/x86_64/munge\*.rpm
 # ...otherwise Slurm will build without MUNGE support
 ```
 
+Download, and build SLURM [ssc]:
+
+```bash
+url=https://download.schedmd.com/slurm
+version=20.02.2
+vm ex $node wget $url/slurm-${version}.tar.bz2
+vm ex $node -- rpmbuild -tb --clean slurm-$version.tar.bz2
+```
+
 ## References
 
 [sag] SLURM Quick Start Administrator Guide  
 <https://slurm.schedmd.com/quickstart_admin.html>
 
-[mas] MUNGE authentication service for SLURM  
+[msc] MUNGE Source Code on GitHub  
 <https://github.com/dun/munge>  
 <https://github.com/dun/munge/wiki/Installation-Guide>
 
+[ssc] SLURM Source Code on GitHub  
+<https://www.schedmd.com/downloads.php>
 
 [0]: source_me.sh
 [1]: etc/slurm/slurm.conf-debian_localhost
