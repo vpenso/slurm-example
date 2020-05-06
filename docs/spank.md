@@ -47,15 +47,15 @@ srun hostname
 SPANK Header File  
 <https://github.com/SchedMD/slurm/blob/master/slurm/spank.h>
 
-Slurm SPANK Lua plugin  
+Lua SPANK plugin enables support of Lua job submit plugins  
 <https://slurm.schedmd.com/job_submit_plugins.html>  
 <https://github.com/stanford-rc/slurm-spank-lua>  
 <https://funinit.wordpress.com/2018/06/07/how-to-use-job_submit_lua-with-slurm/>
 
-SLURM SPANK Python plugin  
+Python SPANK plugin enables support of Python job submit plugins  
 <https://github.com/ACRC/slurm-job-submit-python>
 
-X11 SLURM spank plugin enables to export X11 display  
+X11 SPANK plugin enables to export X11 display  
 <https://github.com/hautreux/slurm-spank-x11>
 
 SLURM SPANK plugins used at LLNL  
