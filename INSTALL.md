@@ -113,6 +113,7 @@ vm ex $node -r systemctl restart slurmctld slurmd
 conf=$SLURM_EXAMPLE/etc/slurm/slurm.conf-centos_localhost
 vm sy $node -r $conf :/etc/slurm/slurm.conf
 # restart the services
+vm ex $node -r -- systemctl enable --now munge
 vm ex $node -r systemctl restart slurmctld slurmd
 ```
 

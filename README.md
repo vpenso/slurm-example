@@ -41,6 +41,10 @@ Jobs are **identified by a unique number** call `JOBID`.
 
 Following examples use the (job) script [var/exec/sleep](var/exec/sleep)
 
+```bash
+vm sy $node $SLURM_EXAMPLE/var/exec/sleep :
+```
+
 `salloc` (interactive, blocking):
 
 * Waits (blocks) the terminal until the requested resources are allocated
@@ -49,7 +53,7 @@ Following examples use the (job) script [var/exec/sleep](var/exec/sleep)
 
 ```bash
 # start an interactive shell on the default resource allocation
-devops@lxdev01:~$ salloc /bin/bash
+vm ex $node salloc /bin/bash
 salloc: Granted job allocation 20
 # execute an application
 devops@lxdev01:~$ ./sleep 10
