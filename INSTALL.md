@@ -1,15 +1,15 @@
-## SLURM Installation
+# SLURM Installation
 
 This example uses a virtual machines instance setup with vm-tools:
 
 https://github.com/vpenso/vm-tools
 
-The shell script ↴ [source_me.sh][0] adds the tool-chain in this repository to 
+The shell script ↴ [`source_me.sh`][0] adds the tool-chain in this repository to 
 your shell environment.
 
 ## Debian
 
-Install SLURM from the Debian package repository:
+**Install** SLURM from the Debian package repository:
 
 ```bash
 # start a Debian VM instance
@@ -18,7 +18,7 @@ vm s ${image:-debian10} ${node:-lxrm01}
 vm ex $node -r -- apt install -y munge slurm-wlm slurmctld slurmd
 ```
 
-Configure a minimal configuration for a single node:
+**Configure** a minimal configuration for a single node:
 
 ```bash
 # copy the slurm.conf
@@ -31,7 +31,7 @@ vm ex $node -r systemctl restart slurmctld slurmd
 
 ## CentOS 7
 
-Prepare a VM with all build dependencies:
+Prepare a VM with all build **dependencies**:
 
 ```bash
 # start a new VM instance
@@ -49,7 +49,7 @@ vm ex $node -r -- yum install -y @development \
         rrdtool-devel wget zlib-devel
 ```
 
-Build MUNGE, and SLURM from source:
+**Build** MUNGE, and SLURM from source:
 
 ```bash
 # download MUNGE [msc]
@@ -75,7 +75,7 @@ Copy all packages from the VM into a temporary directory on the host:
 vm sy $node ':rpmbuild/RPMS/*/{munge,slurm}*.rpm' $SLURM_EXAMPLE/var/packages/
 ```
 
-Install the packages build above in a VM instance:
+**Install** the packages build above in a VM instance:
 
 ```bash
 vm s ${image:-centos7} ${node:-lxrm01}
