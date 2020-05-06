@@ -34,12 +34,13 @@ vm ex lxdev01 -r '
 
 ## CentOS 7
 
+### Source Build
+
 Prepare a VM with all build dependencies:
 
 ```bash
 # start a new VM instance
-node=lxdev01
-vm s centos7 $node
+vm s ${image:-centos7} ${node:-lxdev01}
 # install compilers, build dependencies, etc.
 vm ex $node -r -- yum -y install epel-release
 vm ex $node -r -- yum install -y @development \
@@ -53,25 +54,30 @@ vm ex $node -r -- yum install -y @development \
         rrdtool-devel wget zlib-devel
 ```
 
-Download, build, and install MUNGE [msc]:
+Build MUNGE, and SLURM from source:
 
 ```bash
+# download MUNGE [msc]
 url=https://github.com/dun/munge/releases/download
 version=0.5.14
 vm ex $node wget $url/munge-${version}/munge-${version}.tar.xz
+# build MUNGE
 vm ex $node -- rpmbuild -tb --without verify --clean munge-${version}.tar.xz
-# install recently build Munge including the development package
+# install Munge, including development package
 vm ex $node -s -- rpm -ivh ~/rpmbuild/RPMS/x86_64/munge\*.rpm
 # ...otherwise Slurm will build without MUNGE support
-```
-
-Download, and build SLURM [ssc]:
-
-```bash
+# donwload SLURM [ssc]
 url=https://download.schedmd.com/slurm
 version=20.02.2
 vm ex $node wget $url/slurm-${version}.tar.bz2
+# build SLURM
 vm ex $node -- rpmbuild -tb --clean slurm-$version.tar.bz2
+```
+
+Copy all packages from the VM into a temporary directory on the host:
+
+```bash
+vm sy $node ':rpmbuild/RPMS/*/{munge,slurm}*.rpm' $SLURM_EXAMPLE/var/packages/
 ```
 
 ## References
