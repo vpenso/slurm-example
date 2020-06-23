@@ -33,7 +33,8 @@ TaskPlugin=task/affinity
 ##
 # SCHEDULING
 # Consider the configuration of each node to be in this file
-FastSchedule=2
+SlurmdParameters=config_overrides
+# FastSchedule=2 # version prior to 20.04
 # FIFO scheduler which initiates jobs in priority order
 SchedulerType=sched/builtin
 # Resource selection algorithm
