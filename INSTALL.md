@@ -90,9 +90,25 @@ vm ex $node -r -- yum install -y \
         slurm-slurmctld-ohpc slurm-slurmd-ohpc slurm-example-configs-ohpc
 ```
 
+## CentOS 8
+
+Install MUNGE, and SLURM from the OpenHPC [opc] repository:
+
+```bash
+node=${node:-lxrm01}
+vm s ${image:-centos8.1} $node
+# required to install run-time dependencies
+vm ex $node -r -- yum -y install epel-release
+vm ex $node -r -- rpm -i \
+        http://repos.openhpc.community/OpenHPC/2/CentOS_8/x86_64/ohpc-release-2-1.el8.x86_64.rpm
+# install MUNGE, and SLURM
+vm ex $node -r -- yum install -y \
+        slurm-slurmctld-ohpc slurm-slurmd-ohpc slurm-example-configs-ohpc
+```
+
 # Configuration
 
-## Debian
+### Debian
 
 **Configure** a minimal configuration for a single node:
 
@@ -104,7 +120,7 @@ vm sy $node -r $conf :/etc/slurm/slurm.conf
 vm ex $node -r systemctl restart slurmctld slurmd
 ```
 
-## CentOS
+### CentOS
 
 **Configure** a minimal configuration for a single node:
 

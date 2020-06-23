@@ -1,10 +1,7 @@
 # SLURM
 
-Before you continue read following intrduction documents:
-
-* [docs/intro.md](docs/intro.md) for the absolute basics on cluster computing.
-* [INSTALL.md](INSTALL.md) to install & configure a simple SLURM cluster in
-  a virtual machine,
+Before you continue read [INSTALL.md](INSTALL.md) to deploy a simple SLURM
+cluster in a virtual machine.
 
 List of the basic SLURM commands for users:
 
