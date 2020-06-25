@@ -38,7 +38,9 @@ srun hostname
 
 ## Lua Plugin
 
-Build the RPM package [splua]:
+This is a different mechanism then the build-in Slurm [job submit
+plugins](job_submit_plugin.md) using Lua also. This sections describes the Lua
+SPANK plugins [splua].
 
 ```bash
 # install the build dependencies
