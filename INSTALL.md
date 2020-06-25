@@ -97,7 +97,10 @@ vm ex $node -r -- yum install -y \
         slurm-slurmctld-ohpc slurm-slurmd-ohpc slurm-example-configs-ohpc
 ```
 
-**Configure** a minimal configuration for a single node.
+## Configuration
+
+Upload the example configuration from this repository to
+`/etc/slurm/slurm.conf`:
 
 ```bash
 # upload a SLURM configuration file
@@ -105,13 +108,15 @@ conf=$SLURM_EXAMPLE/etc/slurm/slurm.conf-centos_localhost
 vm sy $node -r $conf :/etc/slurm/slurm.conf
 ```
 
-Depending on the version of SLURM it may be necessary to adjust the
-configuration:
+**Depending on the version** of Slurm it may be necessary to adjust the
+configuration by selecting one of these parameters:
 
 ```bash
 SlurmdParameters=config_overrides
 # FastSchedule=2                    # version prior to 20.04
 ```
+
+Afterwards start `slurmctld`:
 
 ```bash
 # restart the services
