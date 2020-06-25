@@ -39,6 +39,7 @@ Jobs are **identified by a unique number** call `JOBID`.
 Following examples use the (job) script [var/exec/sleep](var/exec/sleep)
 
 ```bash
+# copy the example to the VM instance
 vm sy $node $SLURM_EXAMPLE/var/exec/sleep :
 ```
 

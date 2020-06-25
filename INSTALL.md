@@ -109,6 +109,14 @@ vm ex $node -r -- yum install -y \
 
 # Configuration
 
+Depending on the version of SLURM it may be necessary to adjust the
+configuration:
+
+```bash
+SlurmdParameters=config_overrides
+# FastSchedule=2                    # version prior to 20.04
+```
+
 ### Debian
 
 **Configure** a minimal configuration for a single node:
