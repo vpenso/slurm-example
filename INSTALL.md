@@ -7,18 +7,8 @@ https://github.com/vpenso/vm-tools
 The shell script ↴ [`source_me.sh`][0] adds the tool-chain in this repository to 
 your shell environment.
 
-## Debian
 
-**Install** SLURM from the Debian package repository:
-
-```bash
-# start a Debian VM instance
-vm s ${image:-debian10} ${node:-lxrm01}
-# install Slurm Debian packages
-vm ex $node -r -- apt install -y munge slurm-wlm slurmctld slurmd
-```
-
-## CentOS 7
+## CentOS
 
 ### Source Build
 
@@ -76,7 +66,9 @@ vm ex $node -r -- yum localinstall -y '/tmp/{munge,slurm}*.rpm'
 
 ### OpenHPC
 
-**Install** MUNGE, and SLURM from the OpenHPC [opc] repository:
+Install MUNGE, and SLURM from the OpenHPC [opc] repository.
+
+**CentOS 7.7**
 
 ```bash
 node=${node:-lxrm01}
@@ -91,9 +83,7 @@ vm ex $node -r -- yum install -y \
         slurm-slurmctld-ohpc slurm-slurmd-ohpc slurm-example-configs-ohpc
 ```
 
-## CentOS 8
-
-Install MUNGE, and SLURM from the OpenHPC [opc] repository:
+**CentOS 8.1**
 
 ```bash
 node=${node:-lxrm01}
@@ -107,7 +97,13 @@ vm ex $node -r -- yum install -y \
         slurm-slurmctld-ohpc slurm-slurmd-ohpc slurm-example-configs-ohpc
 ```
 
-# Configuration
+**Configure** a minimal configuration for a single node.
+
+```bash
+# upload a SLURM configuration file
+conf=$SLURM_EXAMPLE/etc/slurm/slurm.conf-centos_localhost
+vm sy $node -r $conf :/etc/slurm/slurm.conf
+```
 
 Depending on the version of SLURM it may be necessary to adjust the
 configuration:
@@ -117,7 +113,22 @@ SlurmdParameters=config_overrides
 # FastSchedule=2                    # version prior to 20.04
 ```
 
-### Debian
+```bash
+# restart the services
+vm ex $node -r -- systemctl enable --now munge
+vm ex $node -r systemctl restart slurmctld slurmd
+```
+
+## Debian
+
+**Install** SLURM from the Debian package repository:
+
+```bash
+# start a Debian VM instance
+vm s ${image:-debian10} ${node:-lxrm01}
+# install Slurm Debian packages
+vm ex $node -r -- apt install -y munge slurm-wlm slurmctld slurmd
+```
 
 **Configure** a minimal configuration for a single node:
 
@@ -129,18 +140,6 @@ vm sy $node -r $conf :/etc/slurm/slurm.conf
 vm ex $node -r systemctl restart slurmctld slurmd
 ```
 
-### CentOS
-
-**Configure** a minimal configuration for a single node:
-
-```bash
-# upload a SLURM configuration file
-conf=$SLURM_EXAMPLE/etc/slurm/slurm.conf-centos_localhost
-vm sy $node -r $conf :/etc/slurm/slurm.conf
-# restart the services
-vm ex $node -r -- systemctl enable --now munge
-vm ex $node -r systemctl restart slurmctld slurmd
-```
 
 # References
 

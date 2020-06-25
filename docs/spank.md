@@ -38,8 +38,12 @@ srun hostname
 
 ## Lua Plugin
 
+Slurm includes job submit plugin interface for Lua [luapl], which can be enabled
+during compilation.
+
+
 ```bash
-yum install -y lua-devel
+yum install -y lua
 # enable the Lua plugin in the SLURM configuration
 echo 'JobSubmitPlugins=lua' >> /etc/slurm/slurm.conf
 # simple Lua script example
@@ -116,6 +120,11 @@ srun: spank_demo: ctx:local host:lxrm01 caller:slurm_spank_exit uid:root gid:roo
 
 [spkhf] SPANK Header File  
 <https://github.com/SchedMD/slurm/blob/master/slurm/spank.h>
+
+[luapl] Lua Plugin support build into SLURM  
+<https://github.com/SchedMD/slurm/tree/master/src/lua>  
+<https://github.com/SchedMD/slurm/blob/master/src/plugins/job_submit/lua/job_submit_lua.c>  
+<https://github.com/SchedMD/slurm/blob/master/contribs/lua/job_submit.lua>
 
 [splua] Lua SPANK plugin enables support of Lua job submit plugins  
 <https://slurm.schedmd.com/job_submit_plugins.html>  
