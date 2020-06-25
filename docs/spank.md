@@ -43,7 +43,13 @@ srun hostname
 *This is a different mechanism then the build-in Slurm (Lua) [job submit
 plugin](job_submit_plugin.md).*
 
-Install the Lua SPANK plugin [splua]:
+> The Lua SPANK plugin for Slurm allows Lua scripts to take the place of
+> compiled C shared objects in the Slurm `spank(8)` framework. All the power of
+> the C SPANK API is exported to Lua via this plugin, which loads one or scripts
+> and executes Lua functions during the appropriate Slurm phase (as described in
+> the `spank(8)` manpage). [splua]
+
+Install the Lua SPANK plugin:
 
 ```bash
 # install the build dependencies
@@ -77,6 +83,9 @@ srun: spank_demo: ctx:local host:lxrm01 caller:slurm_spank_local_user_init uid:r
 lxrm01
 srun: spank_demo: ctx:local host:lxrm01 caller:slurm_spank_exit uid:root gid:root
 ```
+
+The `spank_demo.lua` plugin  implements the same functionality like the C SPANK
+demo plugin in the previous section.
 
 
 
