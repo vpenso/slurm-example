@@ -38,39 +38,6 @@ srun hostname
 
 ## Lua Plugin
 
-Slurm includes job submit plugin interface for Lua [luapl], which can be enabled
-during compilation.
-
-
-```bash
-yum install -y lua
-# enable the Lua plugin in the SLURM configuration
-echo 'JobSubmitPlugins=lua' >> /etc/slurm/slurm.conf
-# simple Lua script example
-cat > /etc/slurm/job_submit.lua <<EOF
-function slurm_job_submit(job_desc, part_list, submit_uid)
-        if job_desc.account == nil then
-                slurm.log_user("You have to specify account. Usage of default accounts is forbidden.")
-                return slurm.ESLURM_INVALID_ACCOUNT
-        end
-end
-function slurm_job_modify(job_desc, job_rec, part_list, modify_uid)
-    return slurm.SUCCESS
-end
-return slurm.SUCCESS
-EOF
-# load the new configuration
-systemctl restart slurmctld
-```
-
-Run a command to verify that the plugin works:
-
-```bash
->>> srun hostname
-srun: error: You must specify an account!
-srun: error: Unable to allocate resources: Unspecified error
-```
-
 Build the RPM package [splua]:
 
 ```bash
@@ -120,11 +87,6 @@ srun: spank_demo: ctx:local host:lxrm01 caller:slurm_spank_exit uid:root gid:roo
 
 [spkhf] SPANK Header File  
 <https://github.com/SchedMD/slurm/blob/master/slurm/spank.h>
-
-[luapl] Lua Plugin support build into SLURM  
-<https://github.com/SchedMD/slurm/tree/master/src/lua>  
-<https://github.com/SchedMD/slurm/blob/master/src/plugins/job_submit/lua/job_submit_lua.c>  
-<https://github.com/SchedMD/slurm/blob/master/contribs/lua/job_submit.lua>
 
 [splua] Lua SPANK plugin enables support of Lua job submit plugins  
 <https://slurm.schedmd.com/job_submit_plugins.html>  

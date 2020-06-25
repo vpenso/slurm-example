@@ -120,6 +120,7 @@ SlurmdParameters=config_overrides
 Edit the `slurm.conf` with the following command:
 
 ```bash
+# start the Vi editor
 vm lo lxrm01 -r -- vi /etc/slurm/slurm.conf
 ```
 
