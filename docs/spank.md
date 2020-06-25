@@ -94,9 +94,7 @@ srun: spank_demo: ctx:local host:lxrm01 caller:slurm_spank_exit uid:root gid:roo
 <https://github.com/SchedMD/slurm/blob/master/slurm/spank.h>
 
 [splua] Lua SPANK plugin enables support of Lua job submit plugins  
-<https://slurm.schedmd.com/job_submit_plugins.html>  
 <https://github.com/stanford-rc/slurm-spank-lua>  
-<https://funinit.wordpress.com/2018/06/07/how-to-use-job_submit_lua-with-slurm/>
 
 [sppyh] Python SPANK plugin enables support of Python job submit plugins  
 <https://github.com/ACRC/slurm-job-submit-python>

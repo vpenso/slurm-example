@@ -39,3 +39,9 @@ srun: error: Unable to allocate resources: Unspecified error
 <https://github.com/SchedMD/slurm/tree/master/src/lua>  
 <https://github.com/SchedMD/slurm/blob/master/src/plugins/job_submit/lua/job_submit_lua.c>  
 <https://github.com/SchedMD/slurm/blob/master/contribs/lua/job_submit.lua>
+
+[sjdoc] Slurm Job Submit Plugin Documentation  
+<https://slurm.schedmd.com/job_submit_plugins.html>
+
+[htujp] How to use job_submit_lua plugin with Slurm?  
+<https://funinit.wordpress.com/2018/06/07/how-to-use-job_submit_lua-with-slurm/>
