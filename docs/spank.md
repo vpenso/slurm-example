@@ -22,7 +22,7 @@ function:
 
 ```bash
 # install build dependencies
-sudo yum install -y @development git
+sudo yum install -y @development git slurm-devel-ohpc
 # get the demo source code from GitHub
 git clone https://github.com/yqin/slurm-plugins && cd slurm-plugins
 # build the SPANK plugin
