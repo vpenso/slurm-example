@@ -7,12 +7,12 @@
 > `plugstack.conf`, and they will be loaded at runtime during the next job
 > launch. [spank]
 
+Support the co-existence of multiple SPANK plugins:
 
 ```bash
-# support the co-existence of mutliple SPANK plugins
 sudo mkdir /etc/slurm/plugstack.conf.d
-echo 'include /etc/slurm/plugstack.conf.d/*.conf' |\
-        sudo tee /etc/slurm/plugstack.conf
+echo 'include /etc/slurm/plugstack.conf.d/*.conf' \
+        | sudo tee /etc/slurm/plugstack.conf
 ```
 
 ## Demo Plugin
