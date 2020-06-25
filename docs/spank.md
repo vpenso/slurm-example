@@ -84,10 +84,10 @@ lxrm01
 srun: spank_demo: ctx:local host:lxrm01 caller:slurm_spank_exit uid:root gid:root
 ```
 
-The `spank_demo.lua` plugin  implements the same functionality like the C SPANK
-demo plugin in the previous section.
+The [`spank_demo.lua`][demo_lua] plugin  implements the same functionality like
+the C SPANK demo plugin in the previous section.
 
-
+[demo_lua]: https://github.com/stanford-rc/slurm-spank-lua/blob/master/scripts/spank_demo.lua
 
 
 
