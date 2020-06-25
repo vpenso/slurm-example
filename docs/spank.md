@@ -42,7 +42,7 @@ srun hostname
 yum install -y lua-devel
 # enable the Lua plugin in the SLURM configuration
 echo 'JobSubmitPlugins=lua' >> /etc/slurm/slurm.conf
-# create a simple example plugin [splua]
+# simple Lua script example
 cat > /etc/slurm/job_submit.lua <<EOF
 function slurm_job_submit(job_desc, part_list, submit_uid)
         if job_desc.account == nil then
@@ -50,6 +50,10 @@ function slurm_job_submit(job_desc, part_list, submit_uid)
                 return slurm.ESLURM_INVALID_ACCOUNT
         end
 end
+function slurm_job_modify(job_desc, job_rec, part_list, modify_uid)
+    return slurm.SUCCESS
+end
+return slurm.SUCCESS
 EOF
 # load the new configuration
 systemctl restart slurmctld
