@@ -15,6 +15,8 @@ echo 'include /etc/slurm/plugstack.conf.d/*.conf' |\
         sudo tee /etc/slurm/plugstack.conf
 ```
 
+## Demo Plugin
+
 Run the [`simple_demo.c`][demo] [splhc] SPANK plugin to demonstrate various
 callback function:
 
@@ -38,8 +40,8 @@ srun hostname
 
 ## Lua Plugin
 
-This is a different mechanism then the build-in Slurm [job submit
-plugins](job_submit_plugin.md) using Lua also. This sections describes the Lua
+This is a different mechanism then the build-in Slurm (Lua) [job submit
+plugins](job_submit_plugin.md). This sections describes the Lua
 SPANK plugins [splua].
 
 ```bash
