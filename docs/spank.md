@@ -40,9 +40,10 @@ srun hostname
 
 ## Lua Plugin
 
-This is a different mechanism then the build-in Slurm (Lua) [job submit
-plugins](job_submit_plugin.md). This sections describes the Lua
-SPANK plugins [splua].
+*This is a different mechanism then the build-in Slurm (Lua) [job submit
+plugins](job_submit_plugin.md).*
+
+Install the Lua SPANK plugins [splua]:
 
 ```bash
 # install the build dependencies
