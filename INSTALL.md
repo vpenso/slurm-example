@@ -112,11 +112,18 @@ vm sy $node -r $conf :/etc/slurm/slurm.conf
 configuration by selecting one of these parameters:
 
 ```bash
+FastSchedule=2                       # version prior to 20.04
+# or
 SlurmdParameters=config_overrides
-# FastSchedule=2                    # version prior to 20.04
 ```
 
-Afterwards start `slurmctld`:
+Edit the `slurm.conf` with the following command:
+
+```bash
+vm lo lxrm01 -r -- vi /etc/slurm/slurm.conf
+```
+
+Afterwards start `slurmctld` to load the configuration change
 
 ```bash
 # restart the services
