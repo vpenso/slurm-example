@@ -36,7 +36,35 @@ echo "required /etc/slurm/spank/spank_demo.so" | \
 srun hostname
 ```
 
-# References
+### Lua Plugin
+
+```bash
+yum install -y lua-devel
+# enable the Lua plugin in the SLURM configuration
+echo 'JobSubmitPlugins=lua' >> /etc/slurm/slurm.conf
+# create a simple example plugin [splua]
+cat > /etc/slurm/job_submit.lua <<EOF
+function slurm_job_submit(job_desc, part_list, submit_uid)
+        if job_desc.account == nil then
+                slurm.log_user("You have to specify account. Usage of default accounts is forbidden.")
+                return slurm.ESLURM_INVALID_ACCOUNT
+        end
+end
+EOF
+# load the new configuration
+systemctl restart slurmctld
+```
+
+Run a command to verify that the plugin works:
+
+```bash
+>>> srun hostname
+srun: error: You must specify an account!
+srun: error: Unable to allocate resources: Unspecified error
+```
+
+
+### References
 
 [spank] SPANK - Slurm Plug-in Architecture for Node and job (K)control  
 <https://slurm.schedmd.com/spank.html>
