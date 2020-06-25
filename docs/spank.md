@@ -36,7 +36,7 @@ echo "required /etc/slurm/spank/spank_demo.so" | \
 srun hostname
 ```
 
-### Lua Plugin
+## Lua Plugin
 
 ```bash
 yum install -y lua-devel
@@ -67,8 +67,46 @@ srun: error: You must specify an account!
 srun: error: Unable to allocate resources: Unspecified error
 ```
 
+Build the RPM package [splua]:
 
-### References
+```bash
+# install the build dependencies
+sudo yum install -y @development wget lua-devel slurm-devel-ohpc
+# NOTE: we can not check for dependencies since we use slurm-devel-ohpc
+# download the source code
+version=0.39
+wget https://github.com/stanford-rc/slurm-spank-lua/archive/v$version.tar.gz \
+  -O slurm-spank-lua-$version.tar.gz
+# build the RPM package
+rpmbuild --nodeps -ta slurm-spank-lua-0.39.tar.gz
+# install run-time dependencies
+yum install -y lua-posix
+# install the RPM package
+rpm --nodeps -i ~/rpmbuild/RPMS/x86_64/slurm-spank-lua-0.39-1.x86_64.rpm
+# list file in package
+rpm -ql slurm-spank-lua
+# enable the demo plugins
+cp /etc/slurm/lua.d/disabled/spank_demo.lua /etc/slurm/lua.d
+# restart to load the new configuration
+systemctl restart slurmctld
+```
+
+Run a command to verify that the plugin works:
+
+```bash
+>>> srun hostname
+srun: spank_demo: ctx:local host:lxrm01 caller:slurm_spank_init uid:root gid:root
+srun: spank_demo: ctx:local host:lxrm01 caller:slurm_spank_init_post_opt uid:root gid:root
+srun: spank_demo: ctx:local host:lxrm01 caller:slurm_spank_local_user_init uid:root gid:root
+lxrm01
+srun: spank_demo: ctx:local host:lxrm01 caller:slurm_spank_exit uid:root gid:root
+```
+
+
+
+
+
+## References
 
 [spank] SPANK - Slurm Plug-in Architecture for Node and job (K)control  
 <https://slurm.schedmd.com/spank.html>
