@@ -13,11 +13,11 @@ your shell environment.
 
 Install MUNGE, and SLURM from the OpenHPC [opc] repository.
 
-**CentOS 7.7**
+**CentOS 7**
 
 ```bash
 node=${node:-lxrm01}
-vm s ${image:-centos7.7} ${node:-lxrm01}
+vm s ${image:-centos7} ${node:-lxrm01}
 # required to install run-time dependencies
 vm ex $node -r -- yum -y install epel-release
 # install the OpenHPC Yum repository configuration
@@ -28,11 +28,11 @@ vm ex $node -r -- yum install -y \
         slurm-slurmctld-ohpc slurm-slurmd-ohpc slurm-example-configs-ohpc
 ```
 
-**CentOS 8.1**
+**CentOS 8**
 
 ```bash
 node=${node:-lxrm01}
-vm s ${image:-centos8.1} $node
+vm s ${image:-centos8} $node
 # required to install run-time dependencies
 vm ex $node -r -- yum -y install epel-release
 vm ex $node -r -- rpm -i \
